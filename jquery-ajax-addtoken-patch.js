@@ -1,4 +1,8 @@
-var originalAjax = jQuery.ajax;
+/**
+ * Created by marcinkrysiak on 23/04/15.
+ */
+ 
+ var originalAjax = jQuery.ajax;
 
 jQuery.extend({
 
