@@ -5,6 +5,8 @@ jQuery.extend({
   originalAjax: originalAjax,
   tokenUrl: 'getToken',
   requestsWithToken: ['GET', 'PUT', 'POST', 'DELETE'],
+  tokenDataField: 'ownToken',
+  tokenHeader: 'Own-Token',
   
   ajax: function(url, options) {
     var deferObj = jQuery.Deferred(),
@@ -28,7 +30,7 @@ jQuery.extend({
         url: 'token'
       }).done( function(data) {
         options.headers = options.headers || {};
-        options.headers['Own-Token'] = data.ownToken;
+        options.headers[this.tokenHeader] = data[tokenDataField];
   
         self.originalAjax(url, options)
           .done( function(data) {deferObj.resolve(data)})
