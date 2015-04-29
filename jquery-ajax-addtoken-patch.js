@@ -9,9 +9,9 @@ jQuery.extend({
   originalAjax: originalAjax,
   tokenUrl: 'getToken', //in case you want to request token from server and add it to the header prior to each request
   fixedToken: '', //in case if you have fixed token and do not need to request from server every time. Leave empty string, null or false to deactivate or put some string value to make it active and ignore server requesting for token
-  requestsWithToken: ['GET', 'PUT', 'POST', 'DELETE'],
-  tokenDataField: 'ownToken',
-  tokenHeader: 'Own-Token',
+  requestsWithToken: ['GET', 'PUT', 'POST', 'DELETE'], //define here to which type of request you want to add token
+  tokenDataField: 'ownToken', //if you requesting token fron server each time define here what data field in the response body contains the token
+  tokenHeader: 'Own-Token', //define what would be the name containing the token in the final request header
   
   ajax: function(url, options) {
     var deferObj = jQuery.Deferred(),
@@ -28,6 +28,7 @@ jQuery.extend({
         options = options || {};
     /***********************************************/
   
+    //check if for the request type we want to add token and if its not fixed token
     if ( requestsWithToken.indexOf( options.type.toUpperCase() ) !== -1 && !this.fixedToken ) {
      
       this.originalAjax({
@@ -44,6 +45,7 @@ jQuery.extend({
 
     } else {
      
+     //if the token is fixed just add it
      if ( fixedToken ) {
       options.headers = options.headers || {};
       options.headers[this.tokenHeader] = fixedToken;
